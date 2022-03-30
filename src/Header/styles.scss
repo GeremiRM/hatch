@@ -1,0 +1,11 @@
+@import "../styles/mixins";
+@import "../styles/variables";
+
+.header {
+  padding-left: 10px;
+  padding-top: 30px;
+
+  @include medium {
+    padding: 40px 0;
+  }
+}
