@@ -5,17 +5,19 @@ import { Currency, ConversionOpt } from "../../../../types/Currencies";
 interface CurrencyOptProps {
   id: string;
   label: string;
-  value: Currency;
   currencyOpt: ConversionOpt;
+  value: Currency;
+  onChange: (type: ConversionOpt, newCurr: Currency) => void;
 }
 
 export const CurrencySelect: React.FC<CurrencyOptProps> = ({
   id,
   label,
-  value,
   currencyOpt,
+  value,
+  onChange,
 }) => {
-  const { onCurrencyChange, currencies } = useContext(Context);
+  const { currencies } = useContext(Context);
 
   const renderOptions = () => {
     return currencies.map((currency) => (
@@ -28,12 +30,10 @@ export const CurrencySelect: React.FC<CurrencyOptProps> = ({
       <label className="control__label">{label}</label>
       <select
         name={id}
+        onChange={(e) => onChange(currencyOpt, e.target.value as Currency)}
         id={id}
         className="control__field control__select"
         value={value}
-        onChange={(e) =>
-          onCurrencyChange(currencyOpt, e.target.value as Currency)
-        }
       >
         {renderOptions()}
       </select>

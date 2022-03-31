@@ -1,40 +1,61 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFetchExchange } from "../../hooks/useFetchExchange";
-import { Context } from "../../state/Context";
 import { Display } from "./Display";
 import { Form } from "./Form";
+import {
+  Currency,
+  ConversionOpts,
+  ConversionOpt,
+} from "../../types/Currencies";
 
 import "./styles.scss";
 
-type SubmitEvt = React.FormEvent<HTMLFormElement>;
-
 export const Converter: React.FC = () => {
   const [exchangeRate, setExchangeRate] = useState(0);
-  const [display, setDisplay] = useState(0);
+  const [amount, setAmount] = useState(1.0);
+  const [conversionCurr, setConversionCurr] = useState<ConversionOpts>({
+    convertFrom: "USD",
+    convertTo: "EUR",
+  });
 
-  const { conversionCurr, amount } = useContext(Context);
   const { fetchExchangeRate } = useFetchExchange();
 
-  const onConversion = async (e: SubmitEvt) => {
+  const onConversion = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log(e);
+    const target = e.target as typeof e.target & {
+      amount: { value: string };
+      convertFrom: { value: Currency };
+      convertTo: { value: Currency };
+    };
+
+    setAmount(Number(target.amount.value));
     setExchangeRate(
-      await fetchExchangeRate(
-        conversionCurr.convertFrom,
-        conversionCurr.convertTo
-      )
+      await fetchExchangeRate(target.convertFrom.value, target.convertTo.value)
     );
-    setDisplay((_) => Number(amount) * exchangeRate);
+  };
+
+  const onOptionChange = (type: ConversionOpt, newCurr: Currency) => {
+    setConversionCurr({ ...conversionCurr, [type]: newCurr });
   };
 
   return (
     <div className="converter">
-      <Form onSubmit={onConversion} />
+      <Form
+        onSubmit={onConversion}
+        convertFrom={conversionCurr.convertFrom}
+        convertTo={conversionCurr.convertTo}
+        onOptionChange={onOptionChange}
+      />
       <Link to="/history" className="converter__link">
         View conversion history
       </Link>
-      <Display display={display} />
+      <Display
+        amount={amount}
+        display={amount * exchangeRate}
+        convertFrom={conversionCurr.convertFrom}
+        convertTo={conversionCurr.convertTo}
+      />
     </div>
   );
 };

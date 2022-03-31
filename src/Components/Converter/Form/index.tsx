@@ -1,15 +1,20 @@
-import { useContext } from "react";
-import { Context } from "../../../state/Context";
+import { ConversionOpt, Currency } from "../../../types/Currencies";
 import { CurrencySelect } from "./CurrencySelect";
 import "./styles.scss";
 
 interface FormProps {
   onSubmit: any;
+  convertTo: Currency;
+  convertFrom: Currency;
+  onOptionChange: (type: ConversionOpt, newCurr: Currency) => void;
 }
 
-export const Form: React.FC<FormProps> = ({ onSubmit }) => {
-  const { amount, changeAmount, conversionCurr } = useContext(Context);
-
+export const Form: React.FC<FormProps> = ({
+  onSubmit,
+  convertFrom,
+  convertTo,
+  onOptionChange,
+}) => {
   return (
     <form className="form" onSubmit={onSubmit}>
       <div className="control">
@@ -17,25 +22,26 @@ export const Form: React.FC<FormProps> = ({ onSubmit }) => {
           Amount
         </label>
         <input
+          defaultValue="1.00"
           type="text"
           name="amount"
           id="amount"
-          value={amount}
-          onChange={(e) => changeAmount(e.target.value)}
           className="control__field control__input"
         />
       </div>
       <CurrencySelect
         id="convertFrom"
         label="From"
-        value={conversionCurr.convertFrom}
         currencyOpt="convertFrom"
+        value={convertFrom}
+        onChange={onOptionChange}
       />
       <CurrencySelect
         id="convertTo"
         label="To"
-        value={conversionCurr.convertTo}
         currencyOpt="convertTo"
+        value={convertTo}
+        onChange={onOptionChange}
       />
       <button type="submit" className="form__submit">
         Convert
