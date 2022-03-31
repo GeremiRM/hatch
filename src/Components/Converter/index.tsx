@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useFetchExchange } from "../hooks/useFetchExchange";
-import { Context } from "../state/Context";
+import { useFetchExchange } from "../../hooks/useFetchExchange";
+import { Context } from "../../state/Context";
 import { Display } from "./Display";
 import { Form } from "./Form";
 
@@ -18,13 +18,14 @@ export const Converter: React.FC = () => {
 
   const onConversion = async (e: SubmitEvt) => {
     e.preventDefault();
+    console.log(e);
     setExchangeRate(
       await fetchExchangeRate(
         conversionCurr.convertFrom,
         conversionCurr.convertTo
       )
     );
-    setDisplay(parseFloat(amount) * exchangeRate);
+    setDisplay((_) => Number(amount) * exchangeRate);
   };
 
   return (

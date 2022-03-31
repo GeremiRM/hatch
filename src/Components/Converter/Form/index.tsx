@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Context } from "../../state/Context";
+import { Context } from "../../../state/Context";
 import { CurrencySelect } from "./CurrencySelect";
 import "./styles.scss";
 

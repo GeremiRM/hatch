@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { Context } from "../../../state/Context";
-import { Currency, ConversionOpt } from "../../../types/Currencies";
+import { Context } from "../../../../state/Context";
+import { Currency, ConversionOpt } from "../../../../types/Currencies";
 
 interface CurrencyOptProps {
   id: string;
