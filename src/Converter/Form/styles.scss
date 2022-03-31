@@ -35,6 +35,11 @@ $fieldBorderRadius: 8px;
 
     &__select {
       font-family: inherit;
+
+      &:focus {
+        background-color: $primaryColor;
+        border: 1px solid $highlightColor;
+      }
     }
   }
 

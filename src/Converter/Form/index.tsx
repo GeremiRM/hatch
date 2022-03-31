@@ -1,7 +1,10 @@
+import { useContext } from "react";
+import { Context } from "../../state/Context";
+import { CurrencySelect } from "./CurrencySelect";
 import "./styles.scss";
 
 export const Form: React.FC = () => {
-  const renderOptions = () => {};
+  const { amount, changeAmount, conversionCurr } = useContext(Context);
 
   return (
     <form className="form">
@@ -13,29 +16,23 @@ export const Form: React.FC = () => {
           type="text"
           name="amount"
           id="amount"
+          value={amount}
+          onChange={(e) => changeAmount(e.target.value)}
           className="control__field control__input"
         />
       </div>
-      <div className="control">
-        <label className="control__label">From</label>
-        <select
-          name="convertFrom"
-          id="convertFrom"
-          className="control__field control__select"
-        >
-          <option>EUR</option>
-        </select>
-      </div>
-      <div className="control">
-        <label className="control__label">To</label>
-        <select
-          name="convertFrom"
-          id="convertFrom"
-          className="control__field control__select"
-        >
-          <option>USD</option>
-        </select>
-      </div>
+      <CurrencySelect
+        id="convertFrom"
+        label="From"
+        value={conversionCurr.convertFrom}
+        currencyOpt="convertFrom"
+      />
+      <CurrencySelect
+        id="convertTo"
+        label="To"
+        value={conversionCurr.convertTo}
+        currencyOpt="convertTo"
+      />
       <button type="submit" className="form__submit">
         Convert
       </button>
