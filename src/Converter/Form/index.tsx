@@ -3,11 +3,15 @@ import { Context } from "../../state/Context";
 import { CurrencySelect } from "./CurrencySelect";
 import "./styles.scss";
 
-export const Form: React.FC = () => {
+interface FormProps {
+  onSubmit: any;
+}
+
+export const Form: React.FC<FormProps> = ({ onSubmit }) => {
   const { amount, changeAmount, conversionCurr } = useContext(Context);
 
   return (
-    <form className="form">
+    <form className="form" onSubmit={onSubmit}>
       <div className="control">
         <label htmlFor="amount" className="control__label">
           Amount

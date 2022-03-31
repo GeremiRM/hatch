@@ -1,0 +1,15 @@
+@import "../styles/variables";
+
+.converter {
+  display: flex;
+  flex-direction: column;
+  &__link {
+    align-self: flex-end;
+    font-size: 14px;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import "../../styles/variables";
+
+.display {
+  margin-top: 46px;
+  &__from {
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 8px;
+  }
+}

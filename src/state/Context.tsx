@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
+import { useFetchExchange } from "../hooks/useFetchExchange";
 import {
   Currencies,
   Currency,
@@ -9,9 +10,9 @@ import {
 interface IContext {
   amount: string;
   conversionCurr: ConversionOpts;
-  // exchangeRate: number;
-  // onChange: () => {};
   currencies: Currencies;
+  // onConversion: (e: SubmitEvt) => void;
+  exchangeRate: number;
   changeAmount: (newAmount: string) => void;
   onCurrencyChange: (type: ConversionOpt, newCurr: Currency) => void;
 }
@@ -30,6 +31,9 @@ export const ContextProvider = (props: any) => {
     convertFrom: DF_CONVERT_FROM,
     convertTo: DF_CONVERT_TO,
   });
+  const [exchangeRate, setExchangeRate] = useState(0);
+
+  const { fetchExchangeRate } = useFetchExchange();
 
   const changeAmount = (newAmount: string) => {
     setAmount(newAmount);
@@ -39,6 +43,16 @@ export const ContextProvider = (props: any) => {
     setConversionCurr({ ...conversionCurr, [type]: newCurr });
   };
 
+  // const onConversion = async (e: SubmitEvt) => {
+  //   e.preventDefault();
+  //   setExchangeRate(
+  //     await fetchExchangeRate(
+  //       conversionCurr.convertFrom,
+  //       conversionCurr.convertTo
+  //     )
+  //   );
+  // };
+
   return (
     <Context.Provider
       value={{
@@ -47,6 +61,8 @@ export const ContextProvider = (props: any) => {
         currencies: CURRENCIES,
         changeAmount,
         onCurrencyChange,
+        exchangeRate,
+        // onConversion,
       }}
     >
       {props.children}
