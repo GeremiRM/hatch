@@ -4,14 +4,16 @@ interface CurrencyOptProps {
   id: string;
   label: string;
   currencies: Currencies;
-  defaultValue?: Currency;
+  value: Currency;
+  onChange: React.Dispatch<React.SetStateAction<Currency>>;
 }
 
 export const CurrencySelect: React.FC<CurrencyOptProps> = ({
   id,
   label,
   currencies,
-  defaultValue = "USD",
+  value,
+  onChange,
 }) => {
   const renderOptions = () => {
     return currencies.map((currency) => (
@@ -26,7 +28,8 @@ export const CurrencySelect: React.FC<CurrencyOptProps> = ({
         name={id}
         id={id}
         className="control__field control__select"
-        defaultValue={defaultValue}
+        value={value}
+        onChange={(e) => onChange(e.target.value as Currency)}
       >
         {renderOptions()}
       </select>

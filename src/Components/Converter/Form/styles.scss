@@ -8,14 +8,22 @@ $fieldBorderRadius: 8px;
   background-color: $primaryColor;
   border-radius: $formBorderRadius;
   box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
   margin-bottom: 28px;
   padding: 28px 40px;
 
-  .control {
-    &:not(:last-of-type) {
-      margin-bottom: 20px;
-    }
+  .switcher {
+    align-self: flex-end;
+    cursor: pointer;
+    margin: 16px 0 -8px;
 
+    &__img {
+      width: 100%;
+    }
+  }
+
+  .control {
     &__label {
       color: $secondaryTextColor;
       display: block;
@@ -34,8 +42,15 @@ $fieldBorderRadius: 8px;
       width: 100%;
     }
 
+    &__input {
+      margin-bottom: 20px;
+    }
+
     &__select {
+      background: url("../../../assets/dropdownArrow.png") $fieldBgColor
+        no-repeat calc(100% - 16px);
       font-family: inherit;
+      -webkit-appearance: none;
 
       &:focus {
         background-color: $primaryColor;

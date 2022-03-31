@@ -17,7 +17,7 @@ export const useFetchExchange = () => {
         USD -> EUR / 1 = EUR -> USD 
       2) To get the exchange rate between EUR/CHF, I get the USD exchange
         rates of the two and then divide them. 
-        USD -> EUR / USD -> CHF = EUR -> CHF 
+        USD -> CHF / USD -> EUR = EUR -> CHF 
   */
   const fetchExchangeRate = async (
     convertFrom: Currency,
@@ -35,7 +35,7 @@ export const useFetchExchange = () => {
         const exchangeFrom = exchanges["USD" + convertFrom];
         const exchangeTo = exchanges["USD" + convertTo];
 
-        const exchangeRate = exchangeFrom / exchangeTo;
+        const exchangeRate = exchangeTo / exchangeFrom;
         return exchangeRate;
       }
       case "USD": {

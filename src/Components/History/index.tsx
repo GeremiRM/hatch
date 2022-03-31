@@ -7,7 +7,7 @@ export const History: React.FC = () => {
   return (
     <div className="history">
       <Link to="/" className="history__link">
-        Go back
+        &#60; Go back
       </Link>
       <Table />
     </div>
