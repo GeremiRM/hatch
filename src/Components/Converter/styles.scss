@@ -3,13 +3,13 @@
 .converter {
   display: flex;
   flex-direction: column;
+
+  &__title {
+    margin: 75px 0 65px;
+    padding: 0 80px 0 10px;
+  }
+
   &__link {
     align-self: flex-end;
-    font-size: 14px;
-    opacity: 0.5;
-
-    &:hover {
-      opacity: 0.9;
-    }
   }
 }

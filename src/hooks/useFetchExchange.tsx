@@ -27,15 +27,15 @@ export const useFetchExchange = () => {
       case "EUR":
       case "CHF": {
         if (convertTo === "USD") {
-          const data = await fetchData(convertFrom);
-          const exchangeRate = 1 / data[convertTo + convertFrom];
+          const exchange = await fetchData(convertFrom);
+          const exchangeRate = 1 / exchange[convertTo + convertFrom];
           return exchangeRate;
         }
         const exchanges = await fetchData(convertFrom, convertTo);
-        const dataFrom = exchanges["USD" + convertFrom];
-        const dataTo = exchanges["USD" + convertTo];
+        const exchangeFrom = exchanges["USD" + convertFrom];
+        const exchangeTo = exchanges["USD" + convertTo];
 
-        const exchangeRate = dataFrom / dataTo;
+        const exchangeRate = exchangeFrom / exchangeTo;
         return exchangeRate;
       }
       case "USD": {
