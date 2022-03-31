@@ -1,15 +1,55 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
 import { useContext } from "react";
 import { Context } from "../state/Context";
+import { Currencies } from "../types/Currencies";
 
-const API_URL = `http://api.currencylayer.com/live?access_key=${process.env.API_KEY}&currencies=`;
+const API_URL = `http://api.currencylayer.com/live?access_key=${process.env.REACT_APP_API_KEY}&currencies=`;
 
 export const useFetchExchange = () => {
   const { conversionCurr } = useContext(Context);
+  const { convertFrom, convertTo } = conversionCurr;
 
-  useEffect(() => {
-    const fetchExchange = async () => {
-      // const {data}
-    };
-  }, [conversionCurr]);
+  const fetchData = async (...currencies: Currencies) => {
+    const { data } = await axios.get(API_URL + currencies.join(","));
+    return data.quotes;
+  };
+
+  /* 
+    The API (because of the type of plan that I have) only returns
+    exchange rates based on USD, which means that:
+      1) To get the exchange rate of EUR/CHF -> USD, I have to divide the
+        exchange of USD -> EUR/CHF, by 1.
+        USD -> EUR / 1 = EUR -> USD 
+      2) To get the exchange rate between EUR/CHF, I get the USD exchange
+        rates of the two and then divide them. 
+        USD -> EUR / USD -> CHF = EUR -> CHF 
+  */
+  const getExchangeRate = async () => {
+    switch (convertFrom) {
+      case "EUR":
+      case "CHF": {
+        if (convertTo === "USD") {
+          const exchange = await fetchData(convertFrom);
+          const exchangeRate = 1 / exchange[convertTo + convertFrom];
+          return exchangeRate;
+        }
+        const exchanges = await fetchData(convertFrom, convertTo);
+        const exchangeFrom = exchanges["USD" + convertFrom];
+        const exchangeTo = exchanges["USD" + convertTo];
+
+        const exchangeRate = exchangeFrom / exchangeTo;
+        return exchangeRate;
+      }
+      case "USD": {
+        const exchange = await fetchData(convertTo);
+        const exchangeRate = exchange[convertFrom + convertTo];
+        return exchangeRate;
+      }
+
+      default:
+        break;
+    }
+  };
+
+  return { getExchangeRate };
 };
