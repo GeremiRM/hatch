@@ -72,6 +72,8 @@ export const Converter: React.FC = () => {
 
   return (
     <div className="converter">
+      {/* Bg */}
+      <div className="bg"></div>
       {/* Converter Title */}
       <h1 className="converter__title">Convert currencies in real-time.</h1>
       <div className="top">

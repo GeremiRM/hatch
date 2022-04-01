@@ -11,7 +11,7 @@
 // Globals
 
 body {
-  background: linear-gradient(0deg, $terciaryColor 50%, $secondaryColor 50%);
+  background: $secondaryColor;
   color: $textColor;
   font-family: "Roboto", sans-serif;
   min-height: 100vh;
