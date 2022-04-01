@@ -7,6 +7,7 @@ import { CurrencySelect } from "./CurrencySelect";
 import { Currencies, Currency } from "../../../types/Currencies";
 
 import "./styles.scss";
+import { validation } from "../../utils/validation";
 
 interface FormProps {
   onSubmit: (e: React.SyntheticEvent) => Promise<void>;
@@ -21,6 +22,7 @@ export const Form: React.FC<FormProps> = ({
   dfConvertFrom,
   dfConvertTo,
 }) => {
+  const [amount, setAmount] = useState("1.00");
   const [convertFrom, setConvertFrom] = useState<Currency>(dfConvertFrom);
   const [convertTo, setConvertTo] = useState<Currency>(dfConvertTo);
 
@@ -31,6 +33,11 @@ export const Form: React.FC<FormProps> = ({
     setConvertFrom(oldValues[1]);
   };
 
+  const onChange = (e: string) => {
+    const formattedString = validation(e);
+    setAmount(formattedString);
+  };
+
   return (
     <form className="form" onSubmit={onSubmit}>
       {/* Amount Input */}
@@ -39,10 +46,14 @@ export const Form: React.FC<FormProps> = ({
           Amount
         </label>
         <input
-          defaultValue="0.00"
-          type="text"
+          type="number"
           name="amount"
           id="amount"
+          defaultValue="0.00"
+          step="any"
+          min="0"
+          pattern="[0-9]+"
+          title="Please only enter numbers"
           className="control__field control__input"
         />
       </div>
