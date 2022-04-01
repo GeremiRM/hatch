@@ -4,20 +4,18 @@ import { useState } from "react";
 import { CurrencySelect } from "./CurrencySelect";
 
 // types
-import { Currencies, Currency } from "../../../types/Currencies";
+import { Currency } from "../../../types/Currencies";
 
 import "./styles.scss";
 
 interface FormProps {
   onSubmit: (e: React.SyntheticEvent) => Promise<void>;
-  currencies: Currencies;
   dfConvertFrom: Currency;
   dfConvertTo: Currency;
 }
 
 export const Form: React.FC<FormProps> = ({
   onSubmit,
-  currencies,
   dfConvertFrom,
   dfConvertTo,
 }) => {
@@ -32,7 +30,7 @@ export const Form: React.FC<FormProps> = ({
   };
 
   return (
-    <form className="form" onSubmit={onSubmit}>
+    <form className="form" onSubmit={onSubmit} data-testid="form">
       {/* Amount Input */}
       <div className="control">
         <label htmlFor="amount" className="control__label">
@@ -55,13 +53,17 @@ export const Form: React.FC<FormProps> = ({
       <CurrencySelect
         id="convertFrom"
         label="From"
-        currencies={currencies}
         value={convertFrom}
         onChange={setConvertFrom}
       />
 
       {/* Switcher - Switches conversion values */}
-      <div className="switcher" onClick={() => switchValues()}>
+      <div
+        className="switcher"
+        onClick={() => switchValues()}
+        data-testid="switcher"
+        role="button"
+      >
         <img
           src="./assets/switcher.png"
           alt="switch"
@@ -73,7 +75,6 @@ export const Form: React.FC<FormProps> = ({
       <CurrencySelect
         id="convertTo"
         label="To"
-        currencies={currencies}
         value={convertTo}
         onChange={setConvertTo}
       />

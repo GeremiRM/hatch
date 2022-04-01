@@ -1,9 +1,9 @@
-import { Currencies, Currency } from "../../../../types/Currencies";
+import { Currency } from "../../../../types/Currencies";
+import { CURRENCIES } from "../../../../constants";
 
 interface CurrencyOptProps {
   id: string;
   label: string;
-  currencies: Currencies;
   value: Currency;
   onChange: React.Dispatch<React.SetStateAction<Currency>>;
 }
@@ -11,13 +11,12 @@ interface CurrencyOptProps {
 export const CurrencySelect: React.FC<CurrencyOptProps> = ({
   id,
   label,
-  currencies,
   value,
   onChange,
 }) => {
   // Render the currency options
   const renderOptions = () => {
-    return currencies.map((currency) => (
+    return CURRENCIES.map((currency) => (
       <option key={currency}>{currency}</option>
     ));
   };

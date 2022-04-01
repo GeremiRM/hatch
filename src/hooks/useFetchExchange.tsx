@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Currencies, Currency } from "../types/Currencies";
-
-const API_URL = `http://api.currencylayer.com/live?access_key=${process.env.REACT_APP_API_KEY}&currencies=`;
+import { API_URL } from "../constants";
 
 export const useFetchExchange = () => {
   const fetchData = async (...currencies: Currencies) => {

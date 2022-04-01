@@ -4,24 +4,22 @@ import { Link } from "react-router-dom";
 // Components
 import { Display } from "./Display";
 import { Form } from "./Form";
-import { Currency, Currencies } from "../../types/Currencies";
+import { Currency } from "../../types/Currencies";
 
 // Hooks
 import { useFetchExchange } from "../../hooks/useFetchExchange";
 import { useSaveLocalStorage } from "../../hooks/useSaveLocalStorage";
 import { useIsFirstRender } from "../../hooks/useIsFirstRender";
 
+import { DF_CONVERT_FROM, DF_CONVERT_TO } from "../../constants";
+
 import "./styles.scss";
 
 // Default values
-const CURRENCIES: Currencies = ["EUR", "CHF", "USD"];
-
-const DF_CONVERT_FROM: Currency = "USD";
-const DF_CONVERT_TO: Currency = "EUR";
 
 export const Converter: React.FC = () => {
   const [amount, setAmount] = useState(0);
-  const [exchangeRate, setExchangeRate] = useState(null);
+  const [exchangeRate, setExchangeRate] = useState<number | null>(null);
   const [convertFrom, setConvertFrom] = useState<Currency>(DF_CONVERT_FROM);
   const [convertTo, setConvertTo] = useState<Currency>(DF_CONVERT_TO);
 
@@ -34,23 +32,24 @@ export const Converter: React.FC = () => {
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    setExchangeRate(null);
-
     // Get the values from the inputs of the form
     const target = e.target as typeof e.target & {
-      amount: { value: string };
+      amount: { value: number };
       convertFrom: { value: Currency };
       convertTo: { value: Currency };
     };
 
-    setAmount(Number(target.amount.value));
+    setAmount(target.amount.value);
 
     setConvertFrom(target.convertFrom.value);
     setConvertTo(target.convertTo.value);
 
-    setExchangeRate(
-      await fetchExchangeRate(target.convertFrom.value, target.convertTo.value)
+    const exchange = await fetchExchangeRate(
+      target.convertFrom.value,
+      target.convertTo.value
     );
+
+    setExchangeRate(exchange);
   };
 
   useEffect(() => {
@@ -79,7 +78,6 @@ export const Converter: React.FC = () => {
         {/* Conversion Form */}
         <Form
           onSubmit={onSubmit}
-          currencies={CURRENCIES}
           dfConvertFrom={DF_CONVERT_FROM}
           dfConvertTo={DF_CONVERT_TO}
         />

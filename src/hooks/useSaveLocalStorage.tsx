@@ -1,11 +1,10 @@
+import { LOCAL_STORAGE_KEY } from "../constants";
 import { Currency } from "../types/Currencies";
 
 interface Value {
   amount: number;
   currency: Currency;
 }
-
-const KEY = "Conversions";
 
 export const useSaveLocalStorage = () => {
   const saveLocalStorage = async (from: Value, to: Value) => {
@@ -19,15 +18,18 @@ export const useSaveLocalStorage = () => {
       to: `${to.amount} ${to.currency}`,
     };
 
-    const oldConversions = localStorage.getItem(KEY);
+    const oldConversions = localStorage.getItem(LOCAL_STORAGE_KEY);
 
     if (oldConversions) {
       const conversions = await JSON.parse(oldConversions);
-      localStorage.setItem(KEY, JSON.stringify([conversion, ...conversions]));
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY,
+        JSON.stringify([conversion, ...conversions])
+      );
       return;
     }
 
-    localStorage.setItem(KEY, JSON.stringify([conversion]));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([conversion]));
   };
 
   return { saveLocalStorage };
