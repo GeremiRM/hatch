@@ -1,7 +1,13 @@
 @import "../../../styles/variables";
+@import "../../../styles/mixins";
 
 .display {
   margin-top: 46px;
+
+  @include large {
+    margin-top: 64px;
+  }
+
   &__from {
     font-size: 20px;
     font-weight: normal;

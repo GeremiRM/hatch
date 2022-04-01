@@ -15,6 +15,7 @@ export const CurrencySelect: React.FC<CurrencyOptProps> = ({
   value,
   onChange,
 }) => {
+  // Render the currency options
   const renderOptions = () => {
     return currencies.map((currency) => (
       <option key={currency}>{currency}</option>

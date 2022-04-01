@@ -1,4 +1,5 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
 .converter {
   display: flex;
@@ -7,9 +8,26 @@
   &__title {
     margin: 75px 0 65px;
     padding: 0 80px 0 10px;
+
+    @include large {
+      padding: 0;
+      margin: 134px 0 90px;
+    }
+  }
+
+  .top {
+    @include large {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   &__link {
     align-self: flex-end;
+    @include large {
+      align-self: center;
+      margin-top: 24px;
+      justify-self: flex-end;
+    }
   }
 }
