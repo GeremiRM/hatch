@@ -1,23 +1,21 @@
 @import "../../../styles/variables";
+@import "../../../styles/mixins";
 
 $dataBorderRadius: 15px;
 
 .table {
-  border-spacing: 0px 20px;
+  border-spacing: 0 20px;
   width: 100%;
+
   .head {
     .headers {
       color: $secondaryTextColor;
       font-size: 12px;
-      padding: 8px 0;
+      padding: 0 5px 8px;
       text-align: left;
 
       &:first-child {
         padding-left: 20px;
-      }
-
-      &:last-child {
-        // padding-left: 20px;
       }
     }
   }
@@ -30,7 +28,11 @@ $dataBorderRadius: 15px;
     }
 
     .data {
-      padding: 20px 0;
+      max-width: 3ch;
+      overflow: hidden;
+      padding: 20px 5px;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 1;
 
       &:first-child {
         border-bottom-left-radius: $dataBorderRadius;

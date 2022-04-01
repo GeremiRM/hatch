@@ -1,8 +1,14 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
 .history {
   &__link {
     display: block;
-    margin: 70px 0 35px 10px;
+    margin: 70px 0 25px 10px;
+    width: fit-content;
+
+    @include large {
+      margin-top: 60px;
+    }
   }
 }
