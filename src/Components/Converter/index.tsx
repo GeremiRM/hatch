@@ -32,6 +32,8 @@ export const Converter: React.FC = () => {
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
+    setExchangeRate(null);
+
     // Get the values from the inputs of the form
     const target = e.target as typeof e.target & {
       amount: { value: number };
